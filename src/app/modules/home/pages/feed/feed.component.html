@@ -1,0 +1,93 @@
+<!--<div class="form-group">-->
+<!--  <input type="text" class="form-control" name="filterProject" placeholder="Search..." [(ngModel)]="filterProject">-->
+
+<!--</div>-->
+<div>
+  <form [formGroup]="busqueda" (ngSubmit)="sercher()">
+  <input type="search"
+         class="form-control"
+         placeholder="Search..."
+         id="textoserche"
+         formControlName="search"
+  >
+  <button class="btn">Buscar</button>
+  </form>
+</div>
+<div>
+  <form [formGroup]="form">
+    <h4>Tags</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Buscar por Tag</mat-label>
+      <mat-select [formControl]="TagControl" name="tag">
+        <mat-option (click)="loadlist()">None</mat-option>
+        <mat-option *ngFor="let tag of listtag" [value]="tag.nameTags" (click)="updatellsit(tag.tagId)">
+          {{tag.nameTags}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
+<div id="container" *ngFor="let projects of listProjects | search:filterProject">
+  <!-- Start	Product details -->
+  <div class="product-details" >
+    <!-- 	Product Name -->
+    <h1>{{ projects.projectTitle }}</h1>
+    <!-- 		<span class="hint new">New</span> -->
+    <!-- 		<span class="hint free-shipping">Free Shipping</span> -->
+    <!-- 		the Product rating -->
+    <span class="hint-star star">
+      <i class="fa fa-star" aria-hidden="true"></i>
+      <i class="fa fa-star" aria-hidden="true"></i>
+      <i class="fa fa-star" aria-hidden="true"></i>
+      <i class="fa fa-star-half-o" aria-hidden="true"></i>
+      <i class="fa fa-star-o" aria-hidden="true"></i>
+    </span>
+    <!-- The most important information about the product -->
+    <p class="information">" {{ projects.description }} "</p>
+
+    <p class="information"><strong>Presupuesto:</strong>{{ projects.budget }} Bs.</p>
+    <!-- 		Control -->
+    <div class="control">
+
+      <br /><br />
+      <!-- Start Button buying -->
+      <button
+        class="button"
+        class="donationButton"
+      >
+        Donar
+      </button>
+
+      <button
+        class="btn"
+        (click)="viewProject(projects.projectsId)"
+        routerLink="/user/referencesbyId/{{ projects.projectsId }}"
+      >
+        <!-- 		the Price -->
+        <span class="price">Vistas: {{ projects.views }} </span>
+        <span class="buy">ver proyecto</span>
+      </button>
+      <!-- End Button buying -->
+    </div>
+  </div>
+  <div class="product-image">
+    <img
+      src="https://es.unesco.org/youth/toptips/user/pages/images/home-feature-two_mobile.png"
+      alt="Omar Dsoky"
+    />
+
+    <!-- 	product Information-->
+    <div class="info">
+      <h2>Los beneficios</h2>
+      <ul>
+        <li>{{ projects.benefits }}</li>
+      </ul>
+
+      <h2>Presupuesto</h2>
+      <ul>
+        <li>{{ projects.budget }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
